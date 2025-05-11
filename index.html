@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Make it a Quote API</title>
+  <style>
+    body { text-align: center; font-family: sans-serif; background: #f8f8f8; padding: 2em; }
+    canvas { border: 1px solid #ccc; margin-top: 1em; }
+  </style>
+</head>
+<body>
+  <h1>📜 Make it a Quote</h1>
+  <canvas id="canvas" width="800" height="400"></canvas>
+  <br>
+  <a id="download" download="quote.png">📥 ダウンロード</a>
+
+  <script>
+    // クエリパラメータ取得
+    const params = new URLSearchParams(location.search);
+    const text = params.get("text") || "ここに引用文を入れてください";
+    const author = params.get("author") || "";
+
+    // Canvas生成
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+
+    // 背景
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // テキスト描画
+    ctx.fillStyle = "#333";
+    ctx.font = "28px sans-serif";
+    ctx.fillText(`"${text}"`, 50, 180);
+
+    if (author) {
+      ctx.font = "20px sans-serif";
+      ctx.fillText(`- ${author}`, 50, 230);
+    }
+
+    // ダウンロードリンク更新
+    const url = canvas.toDataURL("image/png");
+    const downloadLink = document.getElementById("download");
+    downloadLink.href = url;
+  </script>
+</body>
+</html>
